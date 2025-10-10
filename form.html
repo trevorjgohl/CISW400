@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Assignment #5 - Form Validation</title>
+        
+        <style>
+            h1, h2 {text-align: center;}
+            body {background-color: lightcyan;}
+            hr {border-color: darkblue;}
+            input[type=submit]:hover {
+                background-color: #8da9eeed;
+            }
+            .container {background-color: orange; width: 40vw; margin: 0 auto; overflow: auto; text-align: center; padding: 1.5em;}
+
+            label {float:left; width: 5em; text-align: right; margin-right: 3px;}
+
+            input[type=text], [type=email] {
+                display: block; 
+                margin-bottom: 15px;
+            }
+
+        </style>
+
+        <script language="JavaScript">
+            function validateForm() {
+                if (myForm.city.value=="") 
+                {
+                    alert("Enter a city");
+                    myForm.city.focus();
+                    return false;
+                }
+                return true;
+            }
+
+            function checkState() {
+                var state=myForm.state.value.toUpperCase();
+                var not_valid=0;
+
+                if (state.length!==2) 
+                {
+                    not_valid=1;
+                    myForm.state.focus();
+
+                }   
+                else 
+                {
+                    if (!(state.charCodeAt(0)>=65 && state.charCodeAt(0)<=90)) {
+                        not_valid=1;
+                    }
+                    if (!(state.charCodeAt(1)>=65 && state.charCodeAt(1)<=90)) {
+                        not_valid=1;
+                    }
+                }
+                
+                if (not_valid==1) {
+                    alert("State must be 2 letters.");
+                    return false;
+                }
+
+                return true;
+            } 
+
+            function checkZip() {
+                var zip = myForm.zip.value;
+                var not_valid=0;
+
+                    if (zip=="") {
+                        alert('Enter a zip code');
+                        myForm.zip.focus();
+                        return false;
+                    }   
+                    else 
+                    {
+                        if (isNaN(zip) || (zip.length!=5)) 
+                        {
+                            alert("Zip Code must be a 5-digit number");
+                            myForm.zip.focus();
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                function checkEmail() {
+                    var email=myForm.email.value;
+                    var not_valid=0;
+                    var at_sign = email.search(/@/);
+                    
+                    if ((at_sign<1) || (email.length<3)) {
+                        not_valid=1;
+                }
+
+                    if (not_valid==1) {
+                        alert("Valid email must be entered.");
+                        myForm.email.focus();
+                        return false;
+                    }
+                    return true;
+                }
+        </script>
+    </head>
+
+    <body onload="myForm.city.focus()">
+        <h1>Trevor Gohl @ CRC</h1>
+        <h2>CISW 400 Client-side Web Scripting - Fall 2025 - Fishman</h2>
+        <hr>
+
+        <h2>Assignment 5 - Smart Form</h2>
+        <div class="container">
+            <form id="form" name="myForm" onsubmit="return validateForm() && checkState() && checkZip() && checkEmail();">
+                    <label>City: </label>
+                    <input type="text" name="city" placeholder="Required Field">
+
+                    <label>State: </label>
+                    <input type="text" name="state" maxlength="2" placeholder="e.g. CA, AZ" oninput="this.value = this.value.toUpperCase();" style="width: 6em;">
+
+                    <label>Zip Code: </label>
+                    <input type="text" name="zip" style="width: 6em;">
+
+                    <label>Email: </label> 
+                    <input type="email" name="email" placeholder="example@emailaddress.com" style="width: 15em;">
+
+                    <input type="submit" value="Submit">
+            </form>
+        </div>
+
+
+    </body>
+</html>
